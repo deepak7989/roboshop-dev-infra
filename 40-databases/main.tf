@@ -32,11 +32,10 @@ resource "terraform_data" "mongodb" {
   provisioner "remote-exec" {
     inline = [ 
       "chmod +x /tmp/bootstrap.sh",
-      "sudo -E bash /tmp/bootstrap.sh mongodb ${var.environment}"
+      "sudo sh /tmp/bootstrap.sh mongodb ${var.environment}"
     ]
   }
 }
-<<<<<<< Updated upstream
 
 resource "aws_instance" "redis" {
   ami                    = data.aws_ami.joindevops.id
@@ -76,5 +75,3 @@ resource "terraform_data" "redis" {
     ]
   }
 }
-=======
->>>>>>> Stashed changes
