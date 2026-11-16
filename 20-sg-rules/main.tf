@@ -315,3 +315,5 @@ resource "aws_security_group_rule" "bastion_my_public_ip" {
   cidr_blocks = ["${chomp(data.http.my_public_ip.response_body)}/32"]
   security_group_id = local.bastion_sg_id
 }
+
+
