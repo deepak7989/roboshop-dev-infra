@@ -35,7 +35,7 @@ resource "terraform_data" "mongodb" {
       "sudo sh /tmp/bootstrap.sh mongodb ${var.environment}"
     ]
   }
-}
+}   
 
 resource "aws_instance" "redis" {
   ami                    = data.aws_ami.joindevops.id
