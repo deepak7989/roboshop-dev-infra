@@ -184,3 +184,17 @@ resource "aws_lb_listener_rule" "catalogue" {
     }
   }
 }
+
+resource "terraform_data" "catalogue_delete" {
+  triggers_replace = [
+    aws_instance.catalogue.id
+  ]
+  depends_on = [ aws_autoscaling_policy.catalogue ]
+  
+  # execute where terrafom is running
+  provisioner "local-exec" {
+    inline = [
+      "aws ec2 terminate-instances --instance-ids ${aws_instance.catalogue.id}"
+    ]
+  }
+}
