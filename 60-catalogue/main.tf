@@ -190,10 +190,10 @@ resource "terraform_data" "catalogue_delete" {
     aws_instance.catalogue.id
   ]
   depends_on = [ aws_autoscaling_policy.catalogue ]
-  
+
   # execute where terrafom is running
   provisioner "local-exec" {
-    inline = [
+    command = [
       "aws ec2 terminate-instances --instance-ids ${aws_instance.catalogue.id}"
     ]
   }
