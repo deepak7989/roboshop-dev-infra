@@ -193,8 +193,6 @@ resource "terraform_data" "catalogue_delete" {
 
   # execute where terrafom is running
   provisioner "local-exec" {
-    command = [
-      "aws ec2 terminate-instances --instance-ids ${aws_instance.catalogue.id}"
-    ]
+    command = "aws ec2 terminate-instances --instance-ids ${aws_instance.catalogue.id}"
   }
 }
