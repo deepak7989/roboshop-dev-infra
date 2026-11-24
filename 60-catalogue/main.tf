@@ -120,7 +120,7 @@ resource "aws_lb_target_group" "catalogue" {
 resource "aws_autoscaling_group" "catalogue" {
   name                      = "${local.common_name}-catalogue"
   max_size                  = 10
-  min_size                  = 1
+  min_size                  = 2
   health_check_grace_period = 120
   health_check_type         = "ELB"
   desired_capacity          = 2
@@ -134,6 +134,14 @@ resource "aws_autoscaling_group" "catalogue" {
   vpc_zone_identifier       = [local.private_subnet_id]
 
   target_group_arns = [aws_lb_target_group.catalogue.arn]  # AutoScaling launches ino specific target group
+
+  instance_refresh {
+    strategy = "Rolling"
+    preferences {
+      min_healthy_percentage = 50
+    }
+    triggers = ["launch_template"]
+  }
 
   dynamic "tag" {
     for_each = merge(
@@ -196,3 +204,4 @@ resource "terraform_data" "catalogue_delete" {
     command = "aws ec2 terminate-instances --instance-ids ${aws_instance.catalogue.id}"
   }
 }
+
